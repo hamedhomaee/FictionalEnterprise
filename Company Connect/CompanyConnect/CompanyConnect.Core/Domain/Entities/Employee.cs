@@ -1,4 +1,4 @@
-namespace FictionalEnterprise.CompanyConnect.Core.Domain.Entities;
+namespace CompanyConnect.Core.Domain.Entities;
 
 public class Employee
 {
