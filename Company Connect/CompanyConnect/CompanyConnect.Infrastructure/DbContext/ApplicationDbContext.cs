@@ -1,4 +1,5 @@
 using CompanyConnect.Core.Domain.Entities;
+using CompanyConnect.EntityTypeConfigurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace CompanyConnect.Infrastructure;
@@ -11,8 +12,12 @@ public class ApplicationDbContext(
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+        base
+            .OnModelCreating(modelBuilder);
 
-        
+        modelBuilder
+            .ApplyConfigurationsFromAssembly(
+                typeof(EmployeeEntityTypeConfiguration)
+                    .Assembly);
     }
 }
