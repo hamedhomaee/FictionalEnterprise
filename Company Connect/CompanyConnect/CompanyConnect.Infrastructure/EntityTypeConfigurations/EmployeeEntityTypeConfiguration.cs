@@ -15,22 +15,26 @@ public class EmployeeEntityTypeConfiguration : IEntityTypeConfiguration<Employee
             .HasKey(e => e.Id);
         builder
             .Property(e =>e.Id)
+            .ValueGeneratedOnAdd()
             .HasColumnName("Id");
         
         builder
             .Property(e => e.FirstName)
             .HasMaxLength(50)
-            .HasColumnName("FirstName");
+            .HasColumnName("FirstName")
+            .IsRequired();
 
         builder
             .Property(e => e.LastName)
             .HasMaxLength(50)
-            .HasColumnName("LastName");
+            .HasColumnName("LastName")
+            .IsRequired();
 
         builder
             .Property(e => e.Email)
             .HasMaxLength(50)
-            .HasColumnName("Email");
+            .HasColumnName("Email")
+            .IsRequired();
         builder
             .HasIndex(e => e.Email)
             .IsUnique();
@@ -43,31 +47,37 @@ public class EmployeeEntityTypeConfiguration : IEntityTypeConfiguration<Employee
         builder
             .Property(e => e.HireDate)
             .HasColumnType("date")
-            .HasColumnName("HireDate");
+            .HasColumnName("HireDate")
+            .IsRequired();
 
         builder
             .Property(e => e.JobTitle)
             .HasMaxLength(100)
-            .HasColumnName("JobTitle");
+            .HasColumnName("JobTitle")
+            .IsRequired();
         
         builder
             .Property(e => e.Salary)
             .HasColumnType("decimal")
-            .HasColumnName("Salary");
+            .HasColumnName("Salary")
+            .IsRequired();
 
         builder
             .Property(e => e.IsEmploymentTerminated)
             .HasColumnType("bit")
-            .HasColumnName("IsEmploymentTerminated");
+            .HasColumnName("IsEmploymentTerminated")
+            .IsRequired();
 
         builder
             .Property(e => e.CreatedAt)
             .HasColumnType("datetime2")
-            .HasColumnName("CreatedAt");
+            .HasColumnName("CreatedAt")
+            .IsRequired();
 
         builder
             .Property(e => e.UpdatedAt)
             .HasColumnType("datetime2")
-            .HasColumnName("UpdatedAt");
+            .HasColumnName("UpdatedAt")
+            .IsRequired();
     }
 }
