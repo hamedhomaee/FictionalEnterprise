@@ -14,21 +14,76 @@ public class EmployeeRepository(
     private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
     private readonly ILogger<EmployeeRepository> _logger = logger;
 
-    public Task AddEmployeeAsync(Employee employee)
+    public async Task AddEmployeeAsync(Employee employee)
     {
-        throw new NotImplementedException();
+        if (employee == null)
+        {
+            throw new Exception("Requested employee was null");
+        }
+
+        try
+        {
+            _applicationDbContext.Employees.Add(employee);
+
+            var result = await _applicationDbContext.SaveChangesAsync();
+
+            if (result < 1)
+            {
+                throw new Exception("Number of affected rows was less than one");
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogErrorClassNamePrepended($"Error while adding the employee into the database - {ex}");
+
+            throw;
+        }
     }
 
-    public Task DeleteEmployeeAsync(int employeeId)
+    public async Task DeleteEmployeeAsync(int employeeId)
     {
-        throw new NotImplementedException();
+        Employee employee;
+
+        if (employeeId == 0)
+        {
+            throw new Exception("Employee ID was not specified");
+        }
+
+        try
+        {
+            employee = await _applicationDbContext.Employees.SingleAsync(e => e.Id == employeeId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogErrorClassNamePrepended($"Error while fetching the requested employee from the database - {ex}");
+
+            throw;
+        }
+
+        try
+        {
+            _applicationDbContext.Employees.Remove(employee);
+
+            var result = await _applicationDbContext.SaveChangesAsync();
+
+            if (result < 1)
+            {
+                throw new Exception("Number of affected rows was less than one");
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogErrorClassNamePrepended($"Error while adding the employee into the database - {ex}");
+
+            throw;
+        }
     }
 
     public async Task<Employee?> GetEmployeeAsync(int employeeId)
     {
         if (employeeId == 0)
         {
-            throw new Exception("Employee ID was not specified.");
+            throw new Exception("Employee ID was not specified");
         }
 
         try
@@ -41,19 +96,60 @@ public class EmployeeRepository(
         }
         catch (Exception ex)
         {
-            _logger.LogErrorClassNamePrepended($"Error while fetching employee from database - {ex}");
+            _logger.LogErrorClassNamePrepended($"Error while fetching the employee from the database - {ex}");
 
             throw;
         }
     }
 
-    public Task<IReadOnlyList<Employee>> GetEmployeesAsync()
+    public async Task<IReadOnlyList<Employee>> GetEmployeesAsync()
     {
-        throw new NotImplementedException();
+        try
+        {
+            var employees = await _applicationDbContext.Employees.AsNoTracking().ToListAsync();
+
+            return employees;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error while fetching employees from the database - {ex}");
+
+            throw;
+        }
     }
 
-    public Task UpdateEmployeeAsync(Employee employee)
+    public async Task UpdateEmployeeAsync(Employee employee)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var employeeToUpdate = await _applicationDbContext
+                .Employees
+                    .SingleOrDefaultAsync(e => e.Id == employee.Id);
+
+            employeeToUpdate!.FirstName = employee.FirstName;
+            employeeToUpdate!.LastName = employee.LastName;
+            employeeToUpdate!.Email = employee.Email;
+            employeeToUpdate!.PhoneNumber = employee.PhoneNumber;
+            employeeToUpdate!.HireDate = employee.HireDate;
+            employeeToUpdate!.Department = employee.Department;
+            employeeToUpdate!.JobTitle = employee.JobTitle;
+            employeeToUpdate!.Salary = employee.Salary;
+            employeeToUpdate!.IsEmploymentTerminated = employee.IsEmploymentTerminated;
+            employeeToUpdate!.CreatedAt = employee.CreatedAt;
+            employeeToUpdate!.UpdatedAt = employee.UpdatedAt;
+
+            var result = await _applicationDbContext.SaveChangesAsync();
+
+            if (result < 1)
+            {
+                throw new Exception("Number of affected rows was less than one");
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error while updating the employee in the database - {ex}");
+
+            throw;
+        }
     }
 }
