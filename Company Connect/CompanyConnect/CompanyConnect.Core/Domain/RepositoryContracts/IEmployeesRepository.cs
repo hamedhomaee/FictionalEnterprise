@@ -8,5 +8,5 @@ public interface IEmployeesRepository
     public Task<IReadOnlyList<Employee>> GetEmployeesAsync(); 
     public Task AddEmployeeAsync(Employee employee); 
     public Task UpdateEmployeeAsync(Employee employee); 
-    public Task DeleteEmployeeAsync(Employee employee);
+    public Task DeleteEmployeeAsync(int employeeId);
 }

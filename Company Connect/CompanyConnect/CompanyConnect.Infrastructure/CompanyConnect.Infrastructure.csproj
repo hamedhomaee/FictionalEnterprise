@@ -7,6 +7,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\CompanyConnect.Core\CompanyConnect.Core.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Logging\Logging.csproj" />
   </ItemGroup>
 
   <ItemGroup>
