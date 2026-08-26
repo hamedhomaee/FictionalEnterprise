@@ -9,7 +9,7 @@ namespace CompanyConnect.Infrastructure.Repositories;
 public class EmployeeRepository(
     ApplicationDbContext applicationDbContext,
     ILogger<EmployeeRepository> logger
-) : IEmployeesRepository
+) : IEmployeeRepository
 {
     private readonly ApplicationDbContext _applicationDbContext = applicationDbContext;
     private readonly ILogger<EmployeeRepository> _logger = logger;

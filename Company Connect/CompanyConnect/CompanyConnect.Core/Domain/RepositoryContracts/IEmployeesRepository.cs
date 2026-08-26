@@ -2,7 +2,7 @@ using CompanyConnect.Core.Domain.Entities;
 
 namespace CompanyConnect.Core.Domain.RepositoryContracts;
 
-public interface IEmployeesRepository
+public interface IEmployeeRepository
 {
     public Task<Employee?> GetEmployeeAsync(int employeeId); 
     public Task<IReadOnlyList<Employee>> GetEmployeesAsync(); 
