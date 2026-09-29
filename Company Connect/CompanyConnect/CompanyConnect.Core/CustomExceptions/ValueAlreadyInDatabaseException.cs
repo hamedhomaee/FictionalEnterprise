@@ -1,4 +1,4 @@
-namespace FictionalEnterprise.Shared.CustomExceptions;
+namespace CompanyConnect.Core.CustomExceptions;
 
 public class ValueAlreadyInDatabaseException : Exception
 {

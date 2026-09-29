@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using CompanyConnect.Core.Domain.Entities;
 using CompanyConnect.Core.ServiceContracts;
 using FluentValidation;
@@ -21,8 +22,20 @@ public class EmployeesController(
     [Consumes("application/json")]
     [ProducesResponseType(typeof(Employee), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        "Performance",
+        "CA1873: Avoid potentially expensive logging",
+        Justification = "Logging arguments are simple property accesses and inexpensive to evaluate.")]
     public async Task<ActionResult<Employee>> CreateEmployeeAsync(Employee employee)
     {
+        var activity = Activity.Current;
+
+        _logger.LogInformation(
+            "Trace ID: {TraceId} - Creating Employee with email: {Email}",
+            activity?.TraceId,
+            employee.Email
+        );
+
         // Validate
         await _employeeValidator.ValidateAndThrowAsync(employee);
 
