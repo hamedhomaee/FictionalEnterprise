@@ -9,4 +9,6 @@ public interface IEmployeeRepository
     public Task AddEmployeeAsync(Employee employee); 
     public Task UpdateEmployeeAsync(Employee employee); 
     public Task DeleteEmployeeAsync(int employeeId);
+    public Task<bool> IsEmployeeDuplicateAsync(string email);
+
 }

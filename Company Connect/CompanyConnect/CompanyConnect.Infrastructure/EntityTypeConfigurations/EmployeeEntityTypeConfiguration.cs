@@ -34,7 +34,8 @@ public class EmployeeEntityTypeConfiguration : IEntityTypeConfiguration<Employee
             .Property(e => e.Email)
             .HasMaxLength(50)
             .HasColumnName("Email")
-            .IsRequired();
+            .IsRequired()
+            .UseCollation("SQL_Latin1_General_CP1_CI_AS");
         builder
             .HasIndex(e => e.Email)
             .IsUnique();
@@ -77,7 +78,6 @@ public class EmployeeEntityTypeConfiguration : IEntityTypeConfiguration<Employee
         builder
             .Property(e => e.UpdatedAt)
             .HasColumnType("datetime2")
-            .HasColumnName("UpdatedAt")
-            .IsRequired();
+            .HasColumnName("UpdatedAt");
     }
 }
