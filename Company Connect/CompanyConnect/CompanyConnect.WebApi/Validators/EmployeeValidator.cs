@@ -1,11 +1,11 @@
 using CompanyConnect.Core.Domain.Entities;
 using CompanyConnect.Core.Domain.RepositoryContracts;
-using CompanyConnect.Core.ServiceContracts;
+using CompanyConnect.Core.Dto;
 using FluentValidation;
 
 namespace CompanyConnect.WebApi.Validators;
 
-public class EmployeeValidator : AbstractValidator<Employee>
+public class EmployeeValidator : AbstractValidator<CreateEmployeeDto>
 {
     private readonly IEmployeeRepository _employeeRepository;
 
@@ -45,8 +45,5 @@ public class EmployeeValidator : AbstractValidator<Employee>
 
         RuleFor(e => e.Salary)
             .GreaterThanOrEqualTo(0);
-
-        RuleFor(e => e.CreatedAt)
-            .NotEmpty();
     }
 }

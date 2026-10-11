@@ -27,9 +27,6 @@ internal sealed class GlobalExceptionHandler(
             UnauthorizedAccessException =>
                 (StatusCodes.Status403Forbidden, "Forbidden"),
 
-            InvalidOperationException =>
-                (StatusCodes.Status409Conflict, "Conflict"),
-
             ArgumentException =>
                 (StatusCodes.Status400BadRequest, "Invalid request"),
 

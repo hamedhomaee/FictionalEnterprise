@@ -11,6 +11,9 @@ app.UseExceptionHandler();
 
 app.UseHttpsRedirection();
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.MapControllers();
 
 app.Run();

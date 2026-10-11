@@ -1,4 +1,6 @@
 using CompanyConnect.Core.Domain.RepositoryContracts;
+using CompanyConnect.Core.ServiceContracts;
+using CompanyConnect.Core.Services;
 using CompanyConnect.Infrastructure;
 using CompanyConnect.Infrastructure.Repositories;
 using CompanyConnect.WebApi.ExceptionHandlers;
@@ -31,9 +33,17 @@ public static class IServiceCollectionExtensions
         services.AddProblemDetails();
         services.AddExceptionHandler<GlobalExceptionHandler>();
 
-        // Scoped services
+        // Swagger
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+
+        // Repositories
         services
             .AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+        // Services
+        services
+            .AddScoped<IEmployeeService, EmployeeService>();
 
         return services;
     }
