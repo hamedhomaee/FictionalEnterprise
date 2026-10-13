@@ -4,6 +4,7 @@ using CompanyConnect.Core.Services;
 using CompanyConnect.Infrastructure;
 using CompanyConnect.Infrastructure.Repositories;
 using CompanyConnect.WebApi.ExceptionHandlers;
+using CompanyConnect.WebApi.Mappers;
 using CompanyConnect.WebApi.Validators;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,11 @@ public static class IServiceCollectionExtensions
         // Swagger
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+
+        // AutoMapper
+        services.AddAutoMapper(
+            cfg => {},
+            typeof(EmployeeMappingProfile).Assembly);
 
         // Repositories
         services

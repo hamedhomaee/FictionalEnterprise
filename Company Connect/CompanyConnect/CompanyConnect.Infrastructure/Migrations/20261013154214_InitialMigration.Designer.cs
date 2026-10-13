@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyConnect.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260726165450_InitialMigration")]
+    [Migration("20261013154214_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -46,7 +46,8 @@ namespace CompanyConnect.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
-                        .HasColumnName("Email");
+                        .HasColumnName("Email")
+                        .UseCollation("SQL_Latin1_General_CP1_CI_AS");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -84,7 +85,7 @@ namespace CompanyConnect.Infrastructure.Migrations
                         .HasColumnType("decimal")
                         .HasColumnName("Salary");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedAt");
 
