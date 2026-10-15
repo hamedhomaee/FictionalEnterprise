@@ -9,7 +9,7 @@ services:
       ASPNETCORE_ENVIRONMENT: dev
       ASPNETCORE_HTTP_PORTS: 3000
     depends_on:
-      - service-companyconnect-sql-dev
+      - companyconnect-sql-dev
     secrets:
       - db_connection_string
     entrypoint:
@@ -18,7 +18,7 @@ services:
       - |
         export ConnectionStrings__DefaultConnection="$$(cat /run/secrets/db_connection_string)"
         exec dotnet CompanyConnect.WebApi.dll
-  service-companyconnect-sql-dev:
+  companyconnect-sql-dev:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       ACCEPT_EULA: "Y"

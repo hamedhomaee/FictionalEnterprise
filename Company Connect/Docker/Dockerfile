@@ -6,7 +6,7 @@ COPY CompanyConnect/*.sln .
 COPY CompanyConnect/*.csproj ./aspnetapp/
 RUN dotnet restore
 
-COPY aspnetapp/. ./aspnetapp/
+COPY CompanyConnect/. ./aspnetapp/
 WORKDIR /source/aspnetapp
 RUN dotnet publish -c release -o /app --no-restore
 
