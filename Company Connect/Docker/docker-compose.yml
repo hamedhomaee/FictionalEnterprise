@@ -16,7 +16,7 @@ services:
       - /bin/sh
       - -c
       - |
-        export ConnectionStrings__DefaultConnection="$$(cat /run/secrets/db_connection_string)"
+        export ConnectionStrings__SqlServer="$$(cat /run/secrets/db_connection_string)"
         exec dotnet CompanyConnect.WebApi.dll
   companyconnect-sql-dev:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -43,4 +43,4 @@ secrets:
   sql_password:
     file: ./sql_password.txt
   db_connection_string:
-    file: ./db_connection_string.txt
+    file: ./connection_string.txt
