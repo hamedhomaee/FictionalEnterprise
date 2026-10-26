@@ -13,7 +13,10 @@ public sealed class EmployeesControllerFixture : IAsyncLifetime
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
+            .AddEnvironmentVariables()
             .Build();
+
+        var connectionString = configuration.GetConnectionString("SqlServer");
 
         HttpClient = new HttpClient
         {
