@@ -9,7 +9,7 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseSwagger();
 app.UseSwaggerUI();

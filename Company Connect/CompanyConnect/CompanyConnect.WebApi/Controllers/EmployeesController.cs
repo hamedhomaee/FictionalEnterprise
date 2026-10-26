@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Net;
 using AutoMapper;
 using CompanyConnect.Core.Domain.Entities;
 using CompanyConnect.Core.Dto;
@@ -25,7 +26,7 @@ public class EmployeesController(
     [HttpPost]
     [Consumes("application/json")]
     [ProducesResponseType(typeof(Employee), StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
         "Performance",
         "CA1873: Avoid potentially expensive logging",
@@ -40,15 +41,34 @@ public class EmployeesController(
             employeeDto.Email
         );
 
-        // Validate
         await _employeeValidator.ValidateAndThrowAsync(employeeDto);
 
         Employee employee = _mapper.Map<Employee>(employeeDto);
 
-        // Add to data store
         await _employeeService.AddEmployeeAsync(employee);
 
-        // Send the response
         return Created();
+    }
+
+    [HttpGet("{id:int}")]
+    [ProducesResponseType(typeof(Employee), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Employee>> GetEmployeeAsync(int id)
+    {
+        if (id <= 0)
+        {
+            return BadRequest();
+        }
+
+        var result = await _employeeService
+            .GetEmployeeByIdAsync(id);
+        
+        if (result is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
     }
 }

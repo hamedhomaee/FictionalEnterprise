@@ -57,7 +57,7 @@ internal sealed class GlobalExceptionHandler(
                 {
                     Status = statusCode,
                     Title = title,
-                    Detail = statusCode == 500
+                    Detail = statusCode >= 500
                         ? "An unexpected server error occurred."
                         : exception.Message,
                     Instance = httpContext.Request.Path
