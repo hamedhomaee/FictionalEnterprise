@@ -40,12 +40,18 @@ public class EmployeeRepository(
         return employee;
     }
 
-    public async Task<IReadOnlyList<Employee>> GetEmployeesPagedAsync()
+    public async Task<IReadOnlyList<Employee>> GetEmployeesPagedAsync(
+        int pageNumber,
+        int pageSize,
+        CancellationToken cancellationToken)
     {
         var employees = await _applicationDbContext
             .Employees
                 .AsNoTracking()
-                    .ToListAsync();
+                .OrderBy(e => e.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
 
         return employees;
     }

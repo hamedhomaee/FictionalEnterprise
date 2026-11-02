@@ -5,7 +5,10 @@ namespace CompanyConnect.Core.Domain.RepositoryContracts;
 public interface IEmployeeRepository
 {
     public Task<Employee?> GetEmployeeAsync(int employeeId); 
-    public Task<IReadOnlyList<Employee>> GetEmployeesPagedAsync(); 
+    public Task<IReadOnlyList<Employee>> GetEmployeesPagedAsync(
+        int pageNumber, 
+        int pageSize,
+        CancellationToken cancellationToken); 
     public Task AddEmployeeAsync(Employee employee); 
     public Task UpdateEmployeeAsync(Employee employee); 
     public Task DeleteEmployeeAsync(int employeeId);

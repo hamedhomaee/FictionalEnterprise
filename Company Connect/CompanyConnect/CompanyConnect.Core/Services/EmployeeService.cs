@@ -19,4 +19,16 @@ public class EmployeeService(
 
         return result;
     }
+
+    public async Task<IReadOnlyList<Employee>> GetEmployeesPagedAsync(
+        int pageNumber,
+        int pageSize,
+        CancellationToken cancellationToken)
+    {
+        return await _employeeRepository
+            .GetEmployeesPagedAsync(
+                pageNumber, 
+                pageSize, 
+                cancellationToken);
+    }
 }

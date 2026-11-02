@@ -6,4 +6,8 @@ public interface IEmployeeService
 {
     public Task AddEmployeeAsync(Employee employee);
     public Task<Employee?> GetEmployeeByIdAsync(int id);
+    public Task<IReadOnlyList<Employee>> GetEmployeesPagedAsync(
+        int pageNumber,
+        int pageSize,
+        CancellationToken cancellationToken);
 }

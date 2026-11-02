@@ -63,12 +63,31 @@ public class EmployeesController(
 
         var result = await _employeeService
             .GetEmployeeByIdAsync(id);
-        
+
         if (result is null)
         {
             return NotFound();
         }
 
         return Ok(result);
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(Employee), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IReadOnlyList<Employee>>> GetEmployeesPagedAsync(
+        [FromQuery] int pageNumber = 1,
+        [FromQuery] int pageSize = 10,
+        CancellationToken cancellationToken = default)
+    {
+        if (pageNumber < 1 || pageSize < 1 || pageSize > 100)
+            return BadRequest("Invalid pagination parameters.");
+
+        var employees = await _employeeService.GetEmployeesPagedAsync(
+            pageNumber,
+            pageSize,
+            cancellationToken);
+
+        return Ok(employees);
     }
 }
