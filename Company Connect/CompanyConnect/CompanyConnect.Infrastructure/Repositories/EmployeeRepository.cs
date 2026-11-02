@@ -40,7 +40,7 @@ public class EmployeeRepository(
         return employee;
     }
 
-    public async Task<IReadOnlyList<Employee>> GetEmployeesAsync()
+    public async Task<IReadOnlyList<Employee>> GetEmployeesPagedAsync()
     {
         var employees = await _applicationDbContext
             .Employees

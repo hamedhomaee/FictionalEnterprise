@@ -5,7 +5,7 @@ namespace CompanyConnect.Core.Domain.RepositoryContracts;
 public interface IEmployeeRepository
 {
     public Task<Employee?> GetEmployeeAsync(int employeeId); 
-    public Task<IReadOnlyList<Employee>> GetEmployeesAsync(); 
+    public Task<IReadOnlyList<Employee>> GetEmployeesPagedAsync(); 
     public Task AddEmployeeAsync(Employee employee); 
     public Task UpdateEmployeeAsync(Employee employee); 
     public Task DeleteEmployeeAsync(int employeeId);

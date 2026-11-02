@@ -208,4 +208,95 @@ public class EmployeesControllerTests(
         }
     }
     #endregion
+
+    #region 
+    [Fact]
+    public async Task GetEmployeeAsync_WhenEmployeeExists_ShouldReturnOkResult()
+    {
+        // Arrange
+        var expectedValue = HttpStatusCode.OK;
+
+        // We have this pre-assumption that employer with ID=1 exists
+        HttpRequestMessage getEmployeeHttpRequestMessage = new(
+            HttpMethod.Get,
+            $"{EmployeesEndpoint}/1");
+
+        // Act
+        var response = await _employeesControllerFixture
+            .HttpClient.SendAsync(getEmployeeHttpRequestMessage);
+
+        var actualValue = response.StatusCode;
+
+        // Assert
+        Assert.Equal(expectedValue, actualValue);
+    }
+
+    [Fact]
+    public async Task GetEmployeeAsync_WhenEmployeeDoesNotExist_ShouldReturnNotFoundResult()
+    {
+        // Arrange
+        var expectedValue = HttpStatusCode.NotFound;
+
+        // We get the last ID and increase it by one to make sure the employee does not exist
+        int maxId = await _employeesControllerFixture
+            .ApplicationDbContext
+                .Employees
+                    .MaxAsync(e => (int?)e.Id) ?? 0;
+
+        int nonExistingEmployeeId = maxId + 1;
+
+        HttpRequestMessage getEmployeeHttpRequestMessage = new(
+            HttpMethod.Get,
+            $"{EmployeesEndpoint}/{nonExistingEmployeeId}");
+
+        // Act
+        var response = await _employeesControllerFixture
+            .HttpClient.SendAsync(getEmployeeHttpRequestMessage);
+
+        var actualValue = response.StatusCode;
+
+        // Assert
+        Assert.Equal(expectedValue, actualValue);
+    }
+
+    [Fact]
+    public async Task GetEmployeeAsync_WhenIdIsZero_ShouldReturnBadRequestResult()
+    {
+        // Arrange
+        var expectedValue = HttpStatusCode.BadRequest;
+
+        HttpRequestMessage getEmployeeHttpRequestMessage = new(
+            HttpMethod.Get,
+            $"{EmployeesEndpoint}/0");
+
+        // Act
+        var response = await _employeesControllerFixture
+            .HttpClient.SendAsync(getEmployeeHttpRequestMessage);
+
+        var actualValue = response.StatusCode;
+
+        // Assert
+        Assert.Equal(expectedValue, actualValue);
+    }
+
+    [Fact]
+    public async Task GetEmployeeAsync_WhenIdIsNegative_ShouldReturnBadRequestResult()
+    {
+        // Arrange
+        var expectedValue = HttpStatusCode.BadRequest;
+
+        HttpRequestMessage getEmployeeHttpRequestMessage = new(
+            HttpMethod.Get,
+            $"{EmployeesEndpoint}/-1");
+
+        // Act
+        var response = await _employeesControllerFixture
+            .HttpClient.SendAsync(getEmployeeHttpRequestMessage);
+
+        var actualValue = response.StatusCode;
+
+        // Assert
+        Assert.Equal(expectedValue, actualValue);
+    }
+    #endregion
 }
