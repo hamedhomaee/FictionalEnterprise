@@ -13,7 +13,7 @@ public class EmployeesControllerTests(
     private readonly EmployeesControllerFixture _employeesControllerFixture = employeesControllerFixture;
     private const string EmployeesEndpoint = "api/employees";
 
-    #region CreateEmployee
+    #region CreateEmployeeAsync
     [Fact]
     public async Task CreateEmployeeAsync_WhenValidEmployeeObjectIsPassed_ShouldAddEmployeeToDatabaseAndReturnSuccessResult()
     {
@@ -209,7 +209,7 @@ public class EmployeesControllerTests(
     }
     #endregion
 
-    #region 
+    #region GetEmployeeAsync
     [Fact]
     public async Task GetEmployeeAsync_WhenEmployeeExists_ShouldReturnOkResult()
     {
@@ -292,6 +292,28 @@ public class EmployeesControllerTests(
         // Act
         var response = await _employeesControllerFixture
             .HttpClient.SendAsync(getEmployeeHttpRequestMessage);
+
+        var actualValue = response.StatusCode;
+
+        // Assert
+        Assert.Equal(expectedValue, actualValue);
+    }
+    #endregion
+
+    #region GetEmployeesAsync
+    [Fact]
+    public async Task GetEmployeesAsync_WhenAnyEmployeeExists_ShouldReturnOkResult()
+    {
+        // Arrange
+        var expectedValue = HttpStatusCode.OK;
+
+        HttpRequestMessage getEmployeesHttpRequestMessage = new(
+            HttpMethod.Get,
+            $"{EmployeesEndpoint}");
+
+        // Act
+        var response = await _employeesControllerFixture
+            .HttpClient.SendAsync(getEmployeesHttpRequestMessage);
 
         var actualValue = response.StatusCode;
 
