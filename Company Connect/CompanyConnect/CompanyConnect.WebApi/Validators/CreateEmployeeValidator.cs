@@ -5,11 +5,11 @@ using FluentValidation;
 
 namespace CompanyConnect.WebApi.Validators;
 
-public class EmployeeValidator : AbstractValidator<CreateEmployeeDto>
+public class CreateEmployeeValidator : AbstractValidator<CreateEmployeeDto>
 {
     private readonly IEmployeeRepository _employeeRepository;
 
-    public EmployeeValidator(IEmployeeRepository employeeRepository)
+    public CreateEmployeeValidator(IEmployeeRepository employeeRepository)
     {
         _employeeRepository = employeeRepository;
 

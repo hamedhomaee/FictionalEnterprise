@@ -13,6 +13,9 @@ public class EmployeeService(
     public async Task AddEmployeeAsync(Employee employee) =>
         await _employeeRepository.AddEmployeeAsync(employee);
 
+    public async Task UpdateEmployeeAsync(Employee employee) =>
+        await _employeeRepository.UpdateEmployeeAsync(employee);
+
     public async Task<Employee?> GetEmployeeByIdAsync(int id)
     {
         Employee? result = await _employeeRepository.GetEmployeeAsync(id);
@@ -27,8 +30,8 @@ public class EmployeeService(
     {
         return await _employeeRepository
             .GetEmployeesPagedAsync(
-                pageNumber, 
-                pageSize, 
+                pageNumber,
+                pageSize,
                 cancellationToken);
     }
 }

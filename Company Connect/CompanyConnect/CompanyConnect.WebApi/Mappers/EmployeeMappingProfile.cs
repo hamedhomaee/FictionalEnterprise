@@ -9,5 +9,6 @@ public class EmployeeMappingProfile : Profile
     public EmployeeMappingProfile()
     {
         CreateMap<CreateEmployeeDto, Employee>();
+        CreateMap<UpdateEmployeeDto, Employee>();
     }
 }

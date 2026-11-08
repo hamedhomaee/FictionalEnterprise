@@ -28,7 +28,7 @@ public static class IServiceCollectionExtensions
             });
 
         // Validators
-        services.AddValidatorsFromAssemblyContaining<EmployeeValidator>();
+        services.AddValidatorsFromAssemblyContaining<CreateEmployeeValidator>();
 
         // Custom and global exception handlers
         services.AddProblemDetails();

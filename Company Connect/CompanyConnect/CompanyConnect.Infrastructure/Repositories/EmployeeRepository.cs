@@ -35,6 +35,7 @@ public class EmployeeRepository(
     {
         var employee = await _applicationDbContext
             .Employees
+                .AsNoTracking()
                 .SingleOrDefaultAsync(e => e.Id == employeeId);
 
         return employee;
@@ -60,21 +61,34 @@ public class EmployeeRepository(
     {
         var employeeToUpdate = await _applicationDbContext
             .Employees
-                .SingleOrDefaultAsync(e => e.Id == employee.Id) ?? throw new EntityNotFoundException();
+                .SingleOrDefaultAsync(e => e.Id == employee.Id)
+                ?? throw new EntityNotFoundException();
 
-        employeeToUpdate.FirstName = employee.FirstName;
-        employeeToUpdate.LastName = employee.LastName;
-        employeeToUpdate.Email = employee.Email;
-        employeeToUpdate.PhoneNumber = employee.PhoneNumber;
-        employeeToUpdate.HireDate = employee.HireDate;
-        employeeToUpdate.Department = employee.Department;
-        employeeToUpdate.JobTitle = employee.JobTitle;
-        employeeToUpdate.Salary = employee.Salary;
-        employeeToUpdate.IsEmploymentTerminated = employee.IsEmploymentTerminated;
-        employeeToUpdate.CreatedAt = employee.CreatedAt;
-        employeeToUpdate.UpdatedAt = employee.UpdatedAt;
+        if (!string.IsNullOrWhiteSpace(employee.FirstName))
+            employeeToUpdate.FirstName = employee.FirstName;
 
-        var result = await _applicationDbContext.SaveChangesAsync();
+        if (!string.IsNullOrWhiteSpace(employee.LastName))
+            employeeToUpdate.LastName = employee.LastName;
+
+        if (!string.IsNullOrWhiteSpace(employee.Email))
+            employeeToUpdate.Email = employee.Email;
+
+        if (!string.IsNullOrWhiteSpace(employee.PhoneNumber))
+            employeeToUpdate.PhoneNumber = employee.PhoneNumber;
+
+        if (employee.HireDate != default)
+            employeeToUpdate.HireDate = employee.HireDate;
+
+        if (!string.IsNullOrWhiteSpace(employee.Department))
+            employeeToUpdate.Department = employee.Department;
+
+        if (!string.IsNullOrWhiteSpace(employee.JobTitle))
+            employeeToUpdate.JobTitle = employee.JobTitle;
+
+        if (employee.Salary != default)
+            employeeToUpdate.Salary = employee.Salary;
+
+        await _applicationDbContext.SaveChangesAsync();
     }
 
     public async Task<bool> IsEmployeeDuplicateAsync(string email)
