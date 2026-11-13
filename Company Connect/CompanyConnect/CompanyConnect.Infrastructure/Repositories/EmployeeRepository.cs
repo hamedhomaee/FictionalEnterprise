@@ -88,6 +88,9 @@ public class EmployeeRepository(
         if (employee.Salary != default)
             employeeToUpdate.Salary = employee.Salary;
 
+        if (employee.IsEmploymentTerminated != default)
+            employeeToUpdate.IsEmploymentTerminated = employee.IsEmploymentTerminated;
+
         await _applicationDbContext.SaveChangesAsync();
     }
 

@@ -17,7 +17,7 @@ namespace CompanyConnect.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.10")
+                .HasAnnotation("ProductVersion", "10.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -79,7 +79,8 @@ namespace CompanyConnect.Infrastructure.Migrations
                         .HasColumnName("PhoneNumber");
 
                     b.Property<decimal>("Salary")
-                        .HasColumnType("decimal")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)")
                         .HasColumnName("Salary");
 
                     b.Property<DateTime?>("UpdatedAt")

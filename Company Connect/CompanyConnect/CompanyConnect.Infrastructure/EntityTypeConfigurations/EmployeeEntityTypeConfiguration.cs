@@ -14,10 +14,10 @@ public class EmployeeEntityTypeConfiguration : IEntityTypeConfiguration<Employee
         builder
             .HasKey(e => e.Id);
         builder
-            .Property(e =>e.Id)
+            .Property(e => e.Id)
             .ValueGeneratedOnAdd()
             .HasColumnName("Id");
-        
+
         builder
             .Property(e => e.FirstName)
             .HasMaxLength(50)
@@ -56,10 +56,10 @@ public class EmployeeEntityTypeConfiguration : IEntityTypeConfiguration<Employee
             .HasMaxLength(100)
             .HasColumnName("JobTitle")
             .IsRequired();
-        
+
         builder
             .Property(e => e.Salary)
-            .HasColumnType("decimal")
+            .HasPrecision(18, 2)
             .HasColumnName("Salary")
             .IsRequired();
 
